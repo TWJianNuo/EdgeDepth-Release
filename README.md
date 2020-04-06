@@ -65,3 +65,7 @@ Training Code will be released soon.
 	|[Depth Hints](http://openaccess.thecvf.com/content_ICCV_2019/papers/Watson_Self-Supervised_Monocular_Depth_Hints_ICCV_2019_paper.pdf)              | No            | No           | 0.096                | 0.890           |
 	|Ours              | No            | No           | 0.091                | 0.898           |
 	|Ours              | No            | Yes           | 0.090                | 0.899           |
+
+
+## Acknowledgment
+Quite a few our code base come from [Monodepth2](https://github.com/nianticlabs/monodepth2) and [Depth Hints](https://github.com/nianticlabs/depth-hints)
