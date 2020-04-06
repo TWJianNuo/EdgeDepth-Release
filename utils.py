@@ -12,13 +12,9 @@ import numpy as np
 import torch
 from six.moves import urllib
 import matplotlib.pyplot as plt
-# from globalInfo import acGInfo
 import PIL.Image as pil
 import math
-
-
-# from numba import jit
-
+from labels import *
 
 
 def readlines(filename):
@@ -215,8 +211,22 @@ def tensor2rgb(tensor, ind):
 def tensor2semantic(tensor, ind, isGt = False):
     slice = tensor[ind, :, :, :]
     slice = slice[0,:,:].detach().cpu().numpy()
-    # visualize_semantic(slice).show()
     return visualize_semantic(slice)
+
+def visualize_semantic(img_inds):
+    # please input numpy array
+    size = [img_inds.shape[1], img_inds.shape[0]]
+    background = name2label['unlabeled'].color
+    labelImg = np.array(pil.new("RGB", size, background))
+    for id in trainId2label.keys():
+        if id >= 0:
+            label = trainId2label[id].name
+        else:
+            label = 'unlabeled'
+        color = name2label[label].color
+        mask = img_inds == id
+        labelImg[mask, :] = color
+    return pil.fromarray(labelImg)
 
 def tensor2disp(tensor, ind, vmax = None, percentile = None):
     slice = tensor[ind, 0, :, :].detach().cpu().numpy()
@@ -230,14 +240,12 @@ def tensor2disp(tensor, ind, vmax = None, percentile = None):
     return pil.fromarray(slice[:,:,0:3])
 
 def float2uint8(img):
-    return (img * 4.3 * 255).astype(np.uint8) # 4.5 - 0.011182, 5.6 -0.020146, 5.2 - 0.015210, 5.0 - 0.013278, 4.6 - 0.011309
+    return (img * 4.3 * 255).astype(np.uint8)
 
 def uint82float(img):
-    return (img).astype(np.float) / 4.3 / 255 # 4.5 - 0.011182, 5.6 -0.020146, 5.2 - 0.015210, 5.0 - 0.013278, 4.6 - 0.011309
+    return (img).astype(np.float) / 4.3 / 255
 
 def cvtPNG2Arr(png):
-    # sr = 256 * 256 * 256 / img.max() / 1000
-
     sr = 10000
     png = np.array(png)
     h = png[:,:,0]
