@@ -40,19 +40,24 @@ Training Code will be released soon.
 ## 📊 evaluation
 1. Pretrained Model is available [here](https://drive.google.com/file/d/1Wu2oyoKqsvNHTMoDZF4wbek2gS9RAF2w/view?usp=sharing)
 
-2. To Evaluate without using Morphing, use command:
+2. Precompute GroundTruth DepthMap
 	```shell
-	--split eigen --dataset kitti --data_path [Your Data Address] --load_weights_folder [Your Model Address] --eval_stereo \
+	python export_gt_depth.py --data_path [Your Kitti Raw Data Address] --split eigen
+	```
+
+3. To Evaluate without using Morphing, use command:
+	```shell
+	python evaluate_depth.py --split eigen --dataset kitti --data_path [Your Kitti Raw Data Address] --load_weights_folder [Your Model Address] --eval_stereo \
 	 --num_layers 50 --post_process
 	```
 
 	To Evaluate using Morphing, use command:
 	```shell
-	--split eigen --dataset kitti --data_path [Your Data Address] --load_weights_folder [Your Model Address] --eval_stereo \
+	python evaluate_depth.py --split eigen --dataset kitti --data_path [Your Kitti Raw Data Address] --load_weights_folder [Your Model Address] --eval_stereo \
 	 --num_layers 50 --post_process --bnMorphLoss --load_semantics --seman_path [Your Predicted Semantic Label Address]
 	```
 
-3. You should get performance similar to Entry "Ours" listed in the table:
+4. You should get performance similar to Entry "Ours" listed in the table:
 
 	| Method Name     | Use Lidar Groundtruth? | Is morphed?  | KITTI abs. rel. error |  delta < 1.25  |
 	|-----------------|----------------|--------------|-----------------------|----------------|
