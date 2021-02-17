@@ -66,6 +66,17 @@ Training Code will be released soon.
 	|Ours              | No            | No           | 0.091                | 0.898           |
 	|Ours              | No            | Yes           | 0.090                | 0.899           |
 
+## 🖼 Running on your own images
+
+To run on your own images, run:
+
+```bash
+python test_simple.py --image_path <your_image_path>
+  --model_path <your_model_path>
+  --num_layers <18 or 50>
+```
+
+This will save depths as a numpy array (in original resolution), and a colormapped depth and disparity image.
 
 ## Acknowledgment
 Quite a few our code base come from [Monodepth2](https://github.com/nianticlabs/monodepth2) and [Depth Hints](https://github.com/nianticlabs/depth-hints)
